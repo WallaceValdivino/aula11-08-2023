@@ -2,44 +2,46 @@ package com.example.productbackend.entities;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name="TBL_PRODUCT")
 public class Product implements Serializable {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(length = 1024, nullable = false, unique = true, name = "product_name")
     private String name;
+
     private Double price;
 
-    public Long getId()
-        {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Long id)
-    {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name) 
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public Double getPrice() 
-    {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(Double price)
-    {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
@@ -65,5 +67,4 @@ public class Product implements Serializable {
         return true;
     }
 
-    
 }
