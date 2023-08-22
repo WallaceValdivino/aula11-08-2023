@@ -25,9 +25,35 @@ public class ProductService {
             .orElseThrow(() -> new EntityNotFoundException("Product not found"));
    }
 
-   public Product deleteProductbyId(long id){
-      return null;
-//return this.repository.deleteById(id).orElseThrow(() -> new EntityNotFoundException("Product not found"));
-}
+   public void deleteProductById(long id) {
+      // verificando se existe um produto(entidade) com o id passado
+      // se existir, ele exclui o produto
+      if (this.repository.existsById(id)) {
+         this.repository.deleteById(id);
+      }
+      // se não, ele lança uma excessão
+      else {
+         throw new EntityNotFoundException("Product not found");
+
+      }
+
    }
 
+   public Product save(Product product) {
+      return this.repository.save(product);
+   }
+
+   public void update(long id, Product product) {
+      try {
+         var updateProduct = this.repository.getReferenceById(id);
+         updateProduct.setName(product.getName());
+         updateProduct.setPrice(product.getPrice());
+
+         this.repository.save(updateProduct);
+      } catch (EntityNotFoundException e) {
+         throw new EntityNotFoundException("Product not found");
+      }
+
+   }
+
+}
